@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - View Messages</title>
+  <style>
+    :root {
+      --ice-blue: #e0f7fa;
+      --ice-blue-bg: #eaf7f7;
+      --cerulean: #007ba7;
+      --text: #0b2224;
+      --card-bg: #fff;
+      --shadow: 0 10px 30px rgba(6, 50, 58, 0.09);
+      --radius: 18px;
+      --muted: #6b7c7c;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(180deg, var(--ice-blue-bg) 0%, var(--ice-blue) 70%, var(--ice-blue-bg) 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: var(--text);
+    }
+    .container {
+      max-width: 960px;
+      margin: 32px auto;
+      padding: 24px 36px;
+    }
+    h1 {
+      color: var(--cerulean);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .user-group {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+    .user-code {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--cerulean);
+      border-bottom: 2px solid var(--ice-blue);
+      padding-bottom: 12px;
+      margin: 0 0 16px 0;
+    }
+    .message-card {
+      border: 1px solid #e0f7fa;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      background: #fcfdff;
+    }
+    .message-card p {
+      margin: 0 0 8px 0;
+      line-height: 1.6;
+    }
+    .message-meta {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .no-messages {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--muted);
+      padding: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Received Anonymous Messages</h1>
+    {% if messages_db %}
+      {% for user_code, messages in messages_db.items()|sort(reverse=True) %}
+        <div class="user-group">
+          <h2 class="user-code">User Code: {{ user_code }}</h2>
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="message-card">
+                <p>{{ msg.message }}</p>
+                <p class="message-meta"><strong>Sensitivity:</strong> {{ msg.sensitivity }} | <strong>Deliver To:</strong> {{ msg.delivery }} | <strong>Time:</strong> {{ msg.timestamp_utc }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>No messages submitted for this code yet.</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="no-messages">No messages have been submitted yet.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

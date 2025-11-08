@@ -1,0 +1,56 @@
+{
+  "CGWV": [
+    {
+      "message": "rada madogi",
+      "sensitivity": "normal",
+      "delivery": "team",
+      "timestamp_utc": "2025-11-06T13:24:29.134726"
+    },
+    {
+      "message": "Hello guys",
+      "sensitivity": "sensitive",
+      "delivery": "team",
+      "timestamp_utc": "2025-11-06T13:34:11.891896"
+    }
+  ],
+  "MIEB": [],
+  "0POP": [],
+  "HMYS": [
+    {
+      "message": "Trial and error",
+      "sensitivity": "normal",
+      "delivery": "team",
+      "timestamp_utc": "2025-11-06T14:34:43.766151"
+    },
+    {
+      "message": "Still trying",
+      "sensitivity": "normal",
+      "delivery": "team",
+      "timestamp_utc": "2025-11-06T14:36:41.892549"
+    },
+    {
+      "message": "JUST TRYING",
+      "sensitivity": "normal",
+      "delivery": "team",
+      "timestamp_utc": "2025-11-06T15:33:56.849002"
+    },
+    {
+      "message": "Trying",
+      "sensitivity": "normal",
+      "delivery": "team",
+      "timestamp_utc": "2025-11-06T15:38:39.193386"
+    },
+    {
+      "message": "Hello",
+      "sensitivity": "normal",
+      "delivery": "team",
+      "timestamp_utc": "2025-11-06T16:54:38.287902"
+    },
+    {
+      "message": "trial",
+      "sensitivity": "normal",
+      "delivery": "team",
+      "timestamp_utc": "2025-11-07T20:16:27.980290"
+    }
+  ]
+}

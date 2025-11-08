@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(180deg, #eaf7f7 0%, #e0f7fa 70%, #eaf7f7 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #0b2224;
+        }
+        .message-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(6,50,58,0.09);
+            text-align: center;
+            max-width: 400px;
+        }
+        .icon {
+            font-size: 4rem;
+            color: #c0392b; /* Reddish color for error */
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #c0392b;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .btn {
+            background: #007ba7;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 28px;
+            font-size: 1.09rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.17s;
+        }
+        .btn:hover {
+            background: #005b83;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <div class="icon">⚠️</div>
+        <h1>Submission Error</h1>
+        <p> Kindly go back to homepage and try again </p>
+        <a href="{{ url_for('home') }}" class="btn">Go Home</a>
+    </div>
+</body>
+</html>
