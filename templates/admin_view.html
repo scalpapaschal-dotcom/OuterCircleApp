@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - All Messages</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #007ba7;
+            text-align: center;
+            border-bottom: 2px solid #e0f7fa;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .user-group {
+            margin-bottom: 30px;
+            border: 1px solid #d0f2f6;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #faffff;
+        }
+        .user-code {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #005b83;
+            margin-bottom: 15px;
+        }
+        .message-card {
+            background: #fff;
+            border: 1px solid #e0f7fa;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .message-card:last-child {
+            margin-bottom: 0;
+        }
+        .message-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            white-space: pre-wrap; /* Preserve whitespace and newlines */
+        }
+        .message-meta {
+            font-size: 0.9rem;
+            color: #6b7c7c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .meta-item {
+            background-color: #e6f7fb;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>All Submitted Messages</h1>
+        {% if not messages %}
+            <p style="text-align: center;">No messages have been submitted yet.</p>
+        {% else %}
+            {# Group messages by user_code #}
+            {% for user_code, user_messages in messages|groupby('user_code') %}
+                <div class="user-group">
+                    <h2 class="user-code">User Code: {{ user_code }}</h2>
+                    {% for message in user_messages %}
+                        <div class="message-card">
+                            <p class="message-content">{{ message.message }}</p>
+                            <div class="message-meta">
+                                <span>Timestamp: {{ message.timestamp_utc }}</span>
+                                <div>
+                                    <span class="meta-item">Sensitivity: {{ message.sensitivity }}</span>
+                                    <span class="meta-item">Delivery: {{ message.delivery }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

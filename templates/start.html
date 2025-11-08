@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to OuterCircle</title>
+    <style>
+        :root {
+            --ice-blue: #e0f7fa;
+            --ice-blue-bg: #eaf7f7;
+            --cerulean: #007ba7;
+            --text: #0b2224;
+            --card-bg: #fff;
+            --shadow: 0 10px 30px rgba(6, 50, 58, 0.09);
+            --radius: 18px;
+            --error: #c0392b;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(180deg, var(--ice-blue-bg) 0%, var(--ice-blue) 70%, var(--ice-blue-bg) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text);
+        }
+        .start-container {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+        h1 {
+            color: var(--cerulean);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 28px;
+            font-size: 1.09rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            transition: background 0.17s, box-shadow 0.14s;
+            margin-bottom: 15px;
+        }
+        .btn-primary {
+            background: var(--cerulean);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #005b83;
+        }
+        .login-form {
+            margin-top: 20px;
+        }
+        .login-form input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--ice-blue);
+            font-size: 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        .error-message {
+            color: var(--error);
+            background-color: #fbeae9;
+            border: 1px solid var(--error);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="start-container">
+        <h1>Welcome to OuterCircle</h1>
+        <p>A safe space to share your thoughts anonymously. Your voice matters.</p>
+
+        <a href="{{ url_for('new_code') }}" class="btn btn-primary">Get a New Anonymous Code</a>
+
+        <form action="{{ url_for('login') }}" method="post" class="login-form">
+            <label for="user-code" style="font-weight: 500; display: block; margin-bottom: 8px;">Or use your existing code:</label>
+            <input type="text" id="user-code" name="user-code" placeholder="ENTER YOUR CODE" maxlength="4" required
+                   style="text-transform:uppercase">
+            <button type="submit" class="btn btn-primary" style="background: #009c9c; margin-top: 5px;">Continue with Code</button>
+        </form>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
