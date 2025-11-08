@@ -13,60 +13,36 @@
             --card-bg: #fff;
             --shadow: 0 10px 30px rgba(6, 50, 58, 0.09);
             --radius: 18px;
-            --muted: #6b7c7c;
+            --error: #c0392b;
         }
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(180deg, var(--ice-blue-bg) 0%, var(--ice-blue) 70%, var(--ice-blue-bg) 100%);
+        body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            color: var(--text);
+            background: linear-gradient(180deg, var(--ice-blue-bg) 0%, var(--ice-blue) 70%, var(--ice-blue-bg) 100%);
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text);
         }
-        .container {
+        .start-container {
             background: var(--card-bg);
+            padding: 40px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 40px 36px;
-            max-width: 450px;
             text-align: center;
+            max-width: 450px;
+            width: 90%;
         }
         h1 {
             color: var(--cerulean);
-            margin-bottom: 24px;
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
-        .error {
-            color: #c0392b;
-            background-color: #fbeae5;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
-        .option-box {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e0f7fa;
-        }
-        label {
+        p {
             font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text);
-            display: block;
-            margin-bottom: 12px;
-        }
-        input[type="text"] {
-            width: 80%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1.5px solid var(--ice-blue);
-            font-size: 1.1rem;
-            text-align: center;
-            text-transform: uppercase;
-            margin-bottom: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
         }
         .btn {
             border: none;
@@ -76,38 +52,62 @@
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            display: inline-block;
-            transition: background 0.17s;
-            width: 80%;
+            display: block;
+            width: 100%;
             box-sizing: border-box;
+            transition: background 0.17s, box-shadow 0.14s;
+            margin-bottom: 15px;
         }
         .btn-primary {
             background: var(--cerulean);
             color: #fff;
         }
-        .btn-secondary {
-            background: #fff;
-            color: var(--cerulean);
+        .btn-primary:hover {
+            background: #005b83;
+        }
+        .login-form {
+            margin-top: 20px;
+        }
+        .login-form input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
             border: 1.5px solid var(--ice-blue);
-            margin-top: 12px;
+            font-size: 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        .error-message {
+            color: var(--error);
+            background-color: #fbeae9;
+            border: 1px solid var(--error);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="start-container">
         <h1>Welcome to OuterCircle</h1>
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
-        <form action="/login" method="post">
-            <label for="user-code">Have a code? Enter it here:</label>
-            <input type="text" id="user-code" name="user-code" placeholder="e.g. A1B2" maxlength="4" required>
-            <button type="submit" class="btn btn-primary">Use My Code</button>
+        <p>A safe space to share your thoughts anonymously. Your voice matters.</p>
+
+        <a href="{{ url_for('new_code') }}" class="btn btn-primary">Get a New Anonymous Code</a>
+
+        <form action="{{ url_for('login') }}" method="post" class="login-form">
+            <label for="user-code" style="font-weight: 500; display: block; margin-bottom: 8px;">Or use your existing code:</label>
+            <input type="text" id="user-code" name="user-code" placeholder="ENTER YOUR CODE" maxlength="4" required
+                   style="text-transform:uppercase">
+            <button type="submit" class="btn btn-primary" style="background: #009c9c; margin-top: 5px;">Continue with Code</button>
         </form>
-        <div class="option-box">
-            <label>Or get a new anonymous code:</label>
-            <a href="/new-code" class="btn btn-secondary">I'm a New User</a>
-        </div>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>
