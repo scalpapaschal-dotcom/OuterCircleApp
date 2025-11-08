@@ -1,7 +1,7 @@
 import secrets
 import string
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from datetime import datetime
 import database as db # Import our new database module
 
@@ -15,6 +15,9 @@ db.init_db()
 # --- Configuration ---
 CODE_LENGTH = 4
 CODE_CHARS = string.ascii_uppercase + string.digits
+# IMPORTANT: For a real application, store this password securely as an environment variable.
+# For example: ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'default_password')
+ADMIN_PASSWORD = "SAVE" # You can change "SAVE" to any password you like.
 
 # --- Core Logic ---
 
@@ -92,13 +95,38 @@ def submit_message():
     # Render the encouragement page, passing the user's code back.
     return render_template('EncouragementPage.html', code=code)
 
+@app.route('/admin', methods=['GET', 'POST'])
+def admin_login():
+    """Handles the admin login process."""
+    if request.method == 'POST':
+        password = request.form.get('password')
+        if password == ADMIN_PASSWORD:
+            session['admin_logged_in'] = True
+            flash('Login successful!', 'success')
+            return redirect(url_for('view_messages'))
+        else:
+            flash('Incorrect password.', 'error')
+    return render_template('admin_login.html')
+
+@app.route('/admin/logout')
+def admin_logout():
+    """Logs the admin out."""
+    session.pop('admin_logged_in', None)
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('admin_login'))
+
 @app.route('/messages')
 def view_messages():
     """
     Admin-facing page to view all submitted messages.
-    NOTE: Authentication has been removed. This page is now public.
-    In a production environment, this route should be protected.
+    This route is now protected and requires login.
     """
+    # Check if the admin is logged in
+    if not session.get('admin_logged_in'):
+        # If not logged in, redirect to the admin login page
+        return redirect(url_for('admin_login'))
+
+    # If logged in, proceed to show the messages
     all_messages = db.get_all_messages_grouped()
     return render_template('admin_view.html', messages=all_messages)
 

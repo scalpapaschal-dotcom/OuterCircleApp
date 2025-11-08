@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        :root {
+            --ice-blue: #e0f7fa;
+            --ice-blue-bg: #eaf7f7;
+            --cerulean: #007ba7;
+            --text: #0b2224;
+            --card-bg: #fff;
+            --shadow: 0 10px 30px rgba(6, 50, 58, 0.09);
+            --radius: 18px;
+            --error: #c0392b;
+            --success: #27ae60;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(180deg, var(--ice-blue-bg) 0%, var(--ice-blue) 70%, var(--ice-blue-bg) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text);
+        }
+        .login-container {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            color: var(--cerulean);
+            font-size: 2rem;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--ice-blue);
+            font-size: 1rem;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 28px;
+            font-size: 1.09rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            background: var(--cerulean);
+            color: #fff;
+        }
+        .flash-message {
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            color: #fff;
+        }
+        .flash-error { background-color: var(--error); }
+        .flash-success { background-color: var(--success); }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Admin Access</h1>
+        <form action="{{ url_for('admin_login') }}" method="post">
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Enter Admin Password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

@@ -20,12 +20,28 @@
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e0f7fa;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
         h1 {
             color: #007ba7;
             text-align: center;
             border-bottom: 2px solid #e0f7fa;
             padding-bottom: 15px;
             margin-bottom: 25px;
+        }
+        .logout-btn {
+            background-color: #fbeae9;
+            color: #c0392b;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
         }
         .user-group {
             margin-bottom: 30px;
@@ -73,7 +89,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>All Submitted Messages</h1>
+        <div class="header-container">
+            <h1 style="margin: 0; padding: 0; border: none;">All Submitted Messages</h1>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
+        </div>
         {% if not messages %}
             <p style="text-align: center;">No messages have been submitted yet.</p>
         {% else %}
