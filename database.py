@@ -12,7 +12,6 @@ def get_db_connection():
     if DATABASE_URL: # Production environment on Render
         try:
             conn = psycopg2.connect(DATABASE_URL, cursor_factory=DictCursor)
-            conn.autocommit = True # This is the crucial fix
         except psycopg2.OperationalError as e:
             print(f"!!! DATABASE CONNECTION FAILED: {e}")
             # In a real-world app, you might want to retry or handle this more gracefully.
@@ -55,7 +54,6 @@ def init_db(force_recreate=False):
         )
     ''')
 
-    conn.commit()
     conn.close()
     print("Database initialized.")
 
