@@ -1,0 +1,13 @@
+# Python virtual environment
+venv/
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+
+# Database files (important!)
+*.db
+*.db-journal*
+
+# Old data files
+user_messages.json
