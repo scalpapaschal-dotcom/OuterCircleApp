@@ -10,7 +10,14 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 def get_db_connection():
     """Creates a database connection. The connection object can access columns by name."""
     if DATABASE_URL: # Production environment on Render
-        conn = psycopg2.connect(DATABASE_URL, cursor_factory=DictCursor)
+        try:
+            conn = psycopg2.connect(DATABASE_URL, cursor_factory=DictCursor)
+            conn.autocommit = True # This is the crucial fix
+        except psycopg2.OperationalError as e:
+            print(f"!!! DATABASE CONNECTION FAILED: {e}")
+            # In a real-world app, you might want to retry or handle this more gracefully.
+            # For now, we'll re-raise the exception to see the error clearly in the logs.
+            raise
     else: # Local development environment
         conn = sqlite3.connect('outercircle.db')
         conn.row_factory = sqlite3.Row
@@ -62,26 +69,20 @@ def code_exists(code):
     conn.close()
     return user is not None
 
-def create_user(code):
+def create_user(conn, code):
     """Adds a new user code to the database."""
-    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('INSERT INTO users (code) VALUES (%s)', (code,))
     cursor.close()
-    conn.commit()
-    conn.close()
 
-def add_message_for_code(code, message_data):
+def add_message_for_code(conn, code, message_data):
     """Adds a new message for a given user code."""
-    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
         'INSERT INTO messages (user_code, message, sensitivity, delivery, timestamp_utc) VALUES (%s, %s, %s, %s, %s)',
         (code, message_data['message'], message_data['sensitivity'], message_data['delivery'], message_data['timestamp_utc'])
     )
     cursor.close()
-    conn.commit()
-    conn.close()
 
 def get_all_messages_grouped():
     """Retrieves all messages, grouped by user code, for the admin view."""
